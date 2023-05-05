@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Empresa {
+  id               Int                @id @default(autoincrement())
+  razaoSocial      String             @db.VarChar(255)
+  cnpj             String             @db.VarChar(255)
+  cep              String             @db.VarChar(255)
+  cidade           String
+  estado           String             @db.Char(2)
+  bairro           String
+  complemento      String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  LicencaAmbiental LicencaAmbiental[]
+}
+
+model LicencaAmbiental {
+  id             Int      @id @default(autoincrement())
+  numero         String
+  orgaoAmbiental String   @unique @db.VarChar(255)
+  emissao        DateTime
+  validade       DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  empresa        Empresa  @relation(fields: [empresaId], references: [id])
+  empresaId      Int
+}
