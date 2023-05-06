@@ -100,7 +100,33 @@ ALTER TABLE "LicencaAmbiental" ADD CONSTRAINT "LicencaAmbiental_empresaId_fkey" 
 # Exemplo de Licença Ambiental
 
 ```js
-    "empresa": 1,
     "numero": "198df53",
+    "orgaoAmbiental": "Ibama",
+    "emissao": "2023-05-06",
+    "validade": "2023-07-06",
+    "empresaId": 1
     
+```
+
+# Interface 
+
+```js
+interface EmpresaData {
+  razaoSocial: string
+  cnpj: string
+  cep: string
+  cidade: string
+  estado: string
+  bairro: string
+  complemento: string
+}
+```
+
+```js
+interface LicencaData {
+  numero: string
+  orgaoAmbiental: string
+  emissao: Date
+  validade: Date
+}
 ```

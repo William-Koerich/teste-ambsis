@@ -11,19 +11,11 @@ const prisma = new PrismaClient()
 
 app.use(express.json())
 
-app.get("/", (req: Request, res: Response) => {
-  const { message } = req.body
-
-  if (!message) return res.status(400).send({ error: "Message is required" })
-
-  res.send({ message })
-})
-
 app.get("/empresas", async (req: Request, res: Response) => {
 
-  const empresas = await prisma.empresa.findMany()
+  const company = await prisma.empresa.findMany()
 
-  res.send(empresas)
+  res.send(company)
 })
 
 app.post("/empresa/insert", async (req: Request, res: Response) => {
@@ -83,7 +75,7 @@ app.post("/licenca/insert", async (req: Request, res: Response) => {
     orgaoAmbiental: req.body.orgaoAmbiental,
     emissao: req.body.emissao,
     validade: req.body.validade,
-    empresa: { connect: { id: empresaId } }
+    empresa: { connect: { id: +req.body.id } }
   }
 
   const createLicenca = await prisma.licencaAmbiental.create({ data })
